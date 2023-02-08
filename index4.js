@@ -34,9 +34,9 @@ document.body.appendChild(renderer.domElement);
 //orbit추가 카메라 이후에 등장
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
-orbitControls.minDistance = 0;
-orbitControls.maxDistance = 2.4;
-orbitControls.maxPolarAngle = 2.2;   //=3.14/2
+// orbitControls.minDistance = 0;
+// orbitControls.maxDistance = 2.4;
+// orbitControls.maxPolarAngle = 2.2;   //=3.14/2
 //orbitControls.maxPolarAngle = Math.PI / 2;   //=3.14/2
 
 
@@ -160,6 +160,47 @@ loader.load(
 	}
 );
 
+//obj
+const loader01 = new GLTFLoader();
+// // load a resource
+loader01.load(
+	// resource URL
+	'Rock1.glb',
+	// called when the resource is loaded
+	function ( gltf ) {
+    
+    gltf.scene.scale.set(0.3, 0.2, 0.5); 
+    gltf.scene.position.y= -0.7
+    gltf.scene.position.z= 0.4
+    gltf.scene.position.x= -0.8
+	gltf.scene.rotation.z = Math.PI / 2;
+    gltf.scene.traverse( function ( child ){
+      child.castShadow = true;
+      child.receiveShadow = true;
+     });
+		scene.add( gltf.scene );
+
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
 
 
 const loader1 = new GLTFLoader();
@@ -174,6 +215,46 @@ loader1.load(
     sca.scene.position.y= -1.5;
     sca.scene.position.z= 1.1
     sca.scene.position.x= -1
+    sca.scene.traverse( function ( child ){
+      child.castShadow = true;
+      child.receiveShadow = true;
+     });
+		scene.add( sca.scene );
+
+		sca.animations; // Array<THREE.AnimationClip>
+		sca.scene; // THREE.Group
+		sca.scenes; // Array<THREE.Group>
+		sca.cameras; // Array<THREE.Camera>
+		sca.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
+const loader2 = new GLTFLoader();
+// // load a resource
+loader2.load(
+	// resource URL
+	'poster.glb',
+	// called when the resource is loaded
+	function ( sca ) {
+    sca.scene.scale.set(0.3, 0.3, 0.3); 
+    sca.scene.rotation.x = Math.PI / 2;
+	sca.scene.rotation.y = Math.PI / 1;
+    sca.scene.position.y= 0.3;
+    sca.scene.position.z= -2.5
+    sca.scene.position.x= -1.2
     sca.scene.traverse( function ( child ){
       child.castShadow = true;
       child.receiveShadow = true;
