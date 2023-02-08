@@ -18,7 +18,7 @@ const fov = 70;
   const far = 1000;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.z = 2;
-scene.add(camera)
+//camera.lookAt(new THREE.Vector3(0,0,0));
 
 //렌더러
 const canvas = document.querySelector('.webgl');
@@ -30,22 +30,27 @@ renderer.shadowMap.enabled = true;
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const orbitControls = new OrbitControls(camera,renderer.domElement);
 
+//orbit추가 카메라 이후에 등장
+const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
+orbitControls.minDistance = 0;
+orbitControls.maxDistance = 2.4;
+orbitControls.maxPolarAngle = 2.2;   //=3.14/2
+//orbitControls.maxPolarAngle = Math.PI / 2;   //=3.14/2
 
-//땅
-// const geometry = new THREE.PlaneGeometry(20,20 );
-// const material = new THREE.MeshStandardMaterial({
-//   color:0xffffff,
-//   side: THREE.DoubleSide});
-// const ground = new THREE.Mesh(geometry, material);
-// ground.position.x= 0
-// ground.position.y= -1.5
-// ground.rotation.x = Math.PI / 2;
-// scene.add(ground);  
-// ground.receiveShadow = true;
-// ground.castShadow = true;
+
+// //땅
+//  const geometry00 = new THREE.PlaneGeometry(20,20 );
+//  const material00 = new THREE.MeshStandardMaterial({
+//    color:0xffffff
+//    });
+//  const ground = new THREE.Mesh(geometry00, material00);
+//  ground.position.x= 0
+//  ground.position.y= -1.5
+//  ground.rotation.x = Math.PI / 2;
+//  scene.add(ground);  
+//  ground.castShadow = true;
 
 const geometry = new THREE.PlaneGeometry(0.2,5 );
 const material = new THREE.MeshStandardMaterial({
@@ -155,6 +160,8 @@ loader.load(
 	}
 );
 
+
+
 const loader1 = new GLTFLoader();
 // // load a resource
 loader1.load(
@@ -203,9 +210,9 @@ loader1.load(
 
 const directionalLight = new THREE.DirectionalLight(0xFEF9E7 , 2);
   directionalLight.position.set(-9, 0 , 2);
-  const dlHelper = new THREE.DirectionalLightHelper
-  (directionalLight, 0.2, 0x0000ff);
-  scene.add(dlHelper);
+//   const dlHelper = new THREE.DirectionalLightHelper
+//   (directionalLight, 0.2, 0x0000ff);
+//   scene.add(dlHelper);
   scene.add(directionalLight);
   directionalLight.castShadow = true; // 그림자 0
   directionalLight.shadow.mapSize.width = 1024;
@@ -216,9 +223,15 @@ const directionalLight = new THREE.DirectionalLight(0xFEF9E7 , 2);
 const light = new THREE.AmbientLight( 0x404040, 0.5); // soft white light
 scene.add( light );
 
+// function animate() {
+//     requestAnimationFrame( animate );
+//     controls.update();
+//     renderer.render( scene, camera );
+//   }
+//   animate()
 
 function render(time) {
-time *= 0.0001;  // convert time to seconds  
+time *= 0.00009;  // convert time to seconds  
 directionalLight.position.y = Math.cos( time ) * 3.75 + 1.25;
 
 renderer.render(scene, camera);
@@ -230,9 +243,9 @@ requestAnimationFrame(render);
 // 반응형 처리
 
 function onWindowResize(){
-camera.aspect = window.innerWidth / window.innerHeight;
-camera.updateProjectionMatrix();
-renderer.setSize(window.innerWidth, window.innerHeight);
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+	renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener('resize', onWindowResize);
 
