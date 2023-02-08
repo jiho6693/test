@@ -34,9 +34,9 @@ document.body.appendChild(renderer.domElement);
 //orbit추가 카메라 이후에 등장
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
-// orbitControls.minDistance = 0;
-// orbitControls.maxDistance = 2.4;
-// orbitControls.maxPolarAngle = 2.2;   //=3.14/2
+orbitControls.minDistance = 0;
+orbitControls.maxDistance = 2.4;
+orbitControls.maxPolarAngle = 2.2;   //=3.14/2
 //orbitControls.maxPolarAngle = Math.PI / 2;   //=3.14/2
 
 
